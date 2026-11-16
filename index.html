@@ -1,0 +1,569 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color" content="#f7f5ef">
+
+<title>THE RABBIT HOLE</title>
+
+<style>
+
+:root {
+
+  --paper:#f7f5ef;
+
+  --white:#fffefa;
+
+  --ink:#171615;
+
+  --muted:#77736d;
+
+  --red:#a9272d;
+
+  --line:#e5e0d7;
+
+}
+
+* {box-sizing:border-box}
+
+body {
+
+  margin:0;background:var(--paper);color:var(--ink);
+
+  font-family:Arial,sans-serif;
+
+}
+
+button,input,textarea {font:inherit}
+
+button {cursor:pointer}
+
+.layout {min-height:100vh;display:grid;grid-template-columns:245px 1fr}
+
+aside {
+
+  background:var(--white);border-right:1px solid var(--line);
+
+  padding:27px 22px;display:flex;flex-direction:column;
+
+}
+
+.brand {display:flex;align-items:center;gap:12px}
+
+.brand-name {font-size:16px;font-weight:900;letter-spacing:1.5px}
+
+.brand small {display:block;color:var(--muted);font-size:10px;margin-top:4px}
+
+.eye {width:54px;height:54px;animation:swing 3.6s ease-in-out infinite;transform-origin:center}
+
+@keyframes swing {
+
+  0%,100% {transform:rotate(-9deg)}
+
+  50% {transform:rotate(9deg)}
+
+}
+
+@media(prefers-reduced-motion:reduce) {.eye{animation:none}}
+
+.nav {margin-top:48px;display:grid;gap:9px}
+
+.nav button {
+
+  text-align:left;border:0;background:transparent;padding:13px;
+
+  border-radius:7px;color:#625e58;
+
+}
+
+.nav button.active,.nav button:hover {background:#f3eee7;color:var(--red)}
+
+.side-note {margin-top:auto;color:var(--muted);font-size:11px;line-height:1.7}
+
+main {min-width:0;padding:25px 6vw 60px}
+
+.topbar {
+
+  display:flex;justify-content:space-between;align-items:center;
+
+  border-bottom:1px solid var(--line);padding-bottom:18px;
+
+}
+
+.topbar-label {font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase}
+
+.status {font-size:11px;color:var(--red)}
+
+.hero {max-width:820px;margin:65px auto 40px;text-align:center}
+
+.eyebrow {color:var(--red);font-size:11px;letter-spacing:3px;font-weight:bold}
+
+h1 {font-family:Georgia,serif;font-size:clamp(42px,7vw,76px);font-weight:400;letter-spacing:-3px;margin:17px 0}
+
+.hero p {color:var(--muted);font-size:15px;line-height:1.7}
+
+.search {
+
+  margin:32px auto 12px;max-width:690px;display:flex;
+
+  background:var(--white);border:1px solid var(--line);
+
+  padding:7px;border-radius:9px;
+
+}
+
+.search input {flex:1;min-width:0;border:0;outline:0;background:transparent;padding:13px;font-size:14px}
+
+.search button,.primary {border:0;background:var(--red);color:white;border-radius:6px;padding:13px 20px;font-weight:bold}
+
+.mode {display:flex;justify-content:center;gap:8px;margin:15px}
+
+.mode button {border:1px solid var(--line);background:transparent;padding:8px 14px;border-radius:30px;font-size:11px}
+
+.mode button.selected {border-color:var(--red);color:var(--red)}
+
+.section {max-width:1000px;margin:55px auto 0}
+
+.section-head {display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:18px}
+
+.section h2 {font-family:Georgia,serif;font-size:27px;font-weight:400;margin:0}
+
+.section-head span {font-size:11px;color:var(--muted)}
+
+.cards {display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+
+.story {
+
+  background:var(--white);border:1px solid var(--line);padding:20px;
+
+  border-radius:8px;min-height:175px;display:flex;flex-direction:column;
+
+  justify-content:space-between;transition:transform .2s,border-color .2s;
+
+}
+
+.story:hover {transform:translateY(-3px);border-color:#c9aaa4}
+
+.category {font-size:10px;color:var(--red);letter-spacing:1.5px;text-transform:uppercase}
+
+.story h3 {font-family:Georgia,serif;font-size:20px;font-weight:400;line-height:1.3;margin:16px 0}
+
+.story button {background:none;border:0;padding:0;text-align:left;color:var(--red);font-size:11px}
+
+.daily {
+
+  margin-top:48px;background:#211e1b;color:#fff;padding:30px;
+
+  border-radius:9px;display:flex;gap:25px;align-items:center;
+
+}
+
+.daily .number {font-family:Georgia,serif;font-size:42px;color:#d76c68}
+
+.daily h2 {font-family:Georgia,serif;font-size:24px;font-weight:400;margin:7px 0}
+
+.daily p {font-size:13px;color:#c7c0b8;line-height:1.6}
+
+.daily button {background:transparent;border:1px solid #71645c;color:white;padding:10px 15px;border-radius:5px}
+
+.panel {max-width:850px;margin:45px auto;display:none}
+
+.panel.active {display:block}
+
+.home.active {display:block}
+
+.home {display:none}
+
+.panel h2 {font-family:Georgia,serif;font-weight:400;font-size:38px}
+
+.panel-intro {color:var(--muted);line-height:1.7}
+
+.chatbox {background:var(--white);border:1px solid var(--line);border-radius:9px;padding:20px;margin-top:25px}
+
+.chatbox textarea {width:100%;height:100px;border:0;outline:0;resize:vertical;background:transparent;font:15px Arial}
+
+.chat-actions {display:flex;justify-content:space-between;align-items:center;gap:10px}
+
+.chat-actions small {color:var(--muted);font-size:11px}
+
+.answer {display:none;margin-top:20px;background:var(--white);border:1px solid var(--line);border-radius:9px;padding:22px;line-height:1.7}
+
+.answer h3 {font-family:Georgia,serif;font-weight:400}
+
+.answer p {color:#555}
+
+.answer .disclaimer {font-size:11px;color:var(--red)}
+
+.question-list {display:grid;gap:10px;margin-top:25px}
+
+.question {background:var(--white);border:1px solid var(--line);padding:17px;border-radius:7px;text-align:left}
+
+.question:hover {border-color:var(--red)}
+
+footer {border-top:1px solid var(--line);margin-top:65px;padding-top:20px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between;gap:15px}
+
+@media(max-width:760px) {
+
+ .layout {display:block}
+
+ aside {padding:12px 17px;border-right:0;border-bottom:1px solid var(--line)}
+
+ .brand .eye {width:42px;height:42px}
+
+ .nav {display:flex;overflow:auto;margin-top:12px;gap:3px}
+
+ .nav button {white-space:nowrap;padding:9px 12px;font-size:12px}
+
+ .side-note {display:none}
+
+ main {padding:18px 18px 45px}
+
+ .hero {margin:48px auto 30px}
+
+ h1 {letter-spacing:-2px}
+
+ .cards {grid-template-columns:1fr}
+
+ .story {min-height:135px}
+
+ .daily {align-items:flex-start;padding:22px;gap:14px}
+
+ .daily .number {font-size:30px}
+
+ .section {margin-top:40px}
+
+ footer {flex-direction:column}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<aside>
+
+  <div class="brand">
+
+    <svg class="eye" viewBox="0 0 100 100" aria-label="Jason eye">
+
+      <g stroke="#a9272d" stroke-width="2.5" stroke-linecap="round">
+
+        <path d="M50 3V18 M50 82V97 M3 50H18 M82 50H97"/>
+
+        <path d="M17 17L28 28 M72 72L83 83 M83 17L72 28 M28 72L17 83"/>
+
+        <path d="M32 8L37 23 M63 77L68 92 M8 32L23 37 M77 63L92 68"/>
+
+      </g>
+
+      <path d="M50 19L80 77H20Z" fill="none" stroke="#171615" stroke-width="3"/>
+
+      <path d="M30 49Q50 28 70 49Q50 70 30 49Z" fill="#a9272d"/>
+
+      <circle cx="50" cy="49" r="8" fill="#171615"/>
+
+      <circle cx="53" cy="46" r="2.5" fill="#fff"/>
+
+    </svg>
+
+    <div><div class="brand-name">THE RABBIT HOLE</div><small>Research beyond the surface</small></div>
+
+  </div>
+
+  <nav class="nav">
+
+    <button class="active" data-page="explore">⌂ &nbsp; Explore</button>
+
+    <button data-page="ask">◎ &nbsp; Ask Jason</button>
+
+    <button data-page="questions">⁇ &nbsp; Questions</button>
+
+    <button data-page="about">◉ &nbsp; About</button>
+
+  </nav>
+
+  <div class="side-note">DON'T STOP AT THE FIRST ANSWER.<br>FOLLOW THE QUESTION.</div>
+
+</aside>
+
+<main>
+
+  <div class="topbar">
+
+    <span class="topbar-label">An intelligence engine for curiosity</span>
+
+    <span class="status">● THE RABBIT HOLE</span>
+
+  </div>
+
+  <section class="home active" id="explore">
+
+    <div class="hero">
+
+      <div class="eyebrow">WELCOME TO THE RABBIT HOLE</div>
+
+      <h1>Go beyond the obvious.</h1>
+
+      <p>Discover the stories behind the stories. Explore internet mysteries, strange events, digital culture and questions you never thought to ask.</p>
+
+      <div class="search">
+
+        <input id="mainSearch" placeholder="What have you been wondering about?">
+
+        <button onclick="askFromSearch()">Investigate ↗</button>
+
+      </div>
+
+      <div class="mode">
+
+        <button class="selected">Quick discovery</button>
+
+        <button onclick="go('ask')">Deep investigation</button>
+
+      </div>
+
+    </div>
+
+    <div class="section">
+
+      <div class="section-head"><h2>Choose a rabbit hole.</h2><span>THERE'S MORE THAN MEETS THE EYE</span></div>
+
+      <div class="cards" id="storyCards"></div>
+
+    </div>
+
+    <div class="daily">
+
+      <div class="number">?</div>
+
+      <div style="flex:1">
+
+        <div class="category">JASON'S QUESTION OF THE DAY</div>
+
+        <h2>If the entire internet disappeared tomorrow, what would humanity lose first?</h2>
+
+        <p>Think about it. Then investigate the question.</p>
+
+        <button onclick="askQuestion('If the entire internet disappeared tomorrow, what would humanity lose first?')">Explore this question ↗</button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="panel" id="ask">
+
+    <div class="eyebrow category">YOUR PERSONAL RESEARCH GUIDE</div>
+
+    <h2>Ask Jason.</h2>
+
+    <p class="panel-intro">Every question leads somewhere. Start with something strange, controversial, mysterious or simply interesting.</p>
+
+    <div class="chatbox">
+
+      <textarea id="questionInput" placeholder="Ask anything. What happened? Who was behind it? Why does it matter?"></textarea>
+
+      <div class="chat-actions">
+
+        <small>Be curious. Ask better questions.</small>
+
+        <button class="primary" onclick="research()">Investigate ↗</button>
+
+      </div>
+
+    </div>
+
+    <div class="answer" id="answer">
+
+      <div class="category">JASON'S RESEARCH PREVIEW</div>
+
+      <h3 id="answerTitle"></h3>
+
+      <p id="answerText"></p>
+
+      <p class="disclaimer">This is a demonstration response, not live AI research. Connect a secure AI backend to enable researched answers and verified sources.</p>
+
+    </div>
+
+  </section>
+
+  <section class="panel" id="questions">
+
+    <div class="category">CURIOSITY STARTS HERE</div>
+
+    <h2>Questions worth falling into.</h2>
+
+    <p class="panel-intro">Pick a question. Follow the clues. See where it takes you.</p>
+
+    <div class="question-list" id="questionList"></div>
+
+  </section>
+
+  <section class="panel" id="about">
+
+    <div class="category">ABOUT THIS PLACE</div>
+
+    <h2>Curiosity has no finish line.</h2>
+
+    <p class="panel-intro">THE RABBIT HOLE is a place for people who want to look beyond headlines, question what they see and discover the stories hiding underneath everyday life.</p>
+
+    <p class="panel-intro">Jason is your guide. But the questions are yours.</p>
+
+  </section>
+
+  <footer>
+
+    <span>THE RABBIT HOLE © 2026</span>
+
+    <span>Research beyond the surface.</span>
+
+  </footer>
+
+</main>
+
+</div>
+
+<script>
+
+const stories = [
+
+ ["INTERNET MYSTERIES","Who was really behind the mysterious Cicada 3301 puzzles?"],
+
+ ["SOCIAL MEDIA","Who actually makes money when a video goes viral?"],
+
+ ["INTERNET CULTURE","How does someone become famous overnight?"],
+
+ ["DIGITAL MYSTERIES","What happens to websites when they disappear?"],
+
+ ["PSYCHOLOGY","Why do people remember things that never happened?"],
+
+ ["STRANGE HISTORY","What is one experiment that changed how we see the world?"]
+
+];
+
+const questions = [
+
+ "Who was really behind the mysterious Cicada 3301 puzzles?",
+
+ "Did the internet ever uncover the real identity of Banksy?",
+
+ "Who actually makes money when a video goes viral?",
+
+ "How do TikTok and Instagram decide what appears on your feed?",
+
+ "Can two people experience completely different colours?",
+
+ "Why do people sometimes remember things that never happened?",
+
+ "What happens to the websites that mysteriously disappear?",
+
+ "How did one ordinary person become famous overnight?",
+
+ "What is the strangest experiment ever conducted?",
+
+ "If every person disappeared, which human-made object would survive longest?",
+
+ "Can an online rumour change what people believe in real life?",
+
+ "Why do abandoned places fascinate people?"
+
+];
+
+const cards=document.getElementById("storyCards");
+
+stories.forEach(([category,title])=>{
+
+ const el=document.createElement("article");
+
+ el.className="story";
+
+ el.innerHTML=`<div><div class="category">${category}</div><h3>${title}</h3></div><button>FOLLOW THIS STORY ↗</button>`;
+
+ el.querySelector("button").onclick=()=>askQuestion(title);
+
+ cards.appendChild(el);
+
+});
+
+const list=document.getElementById("questionList");
+
+questions.forEach(q=>{
+
+ const b=document.createElement("button");
+
+ b.className="question";
+
+ b.textContent="↗  "+q;
+
+ b.onclick=()=>askQuestion(q);
+
+ list.appendChild(b);
+
+});
+
+function go(page){
+
+ document.querySelectorAll(".home,.panel").forEach(x=>x.classList.remove("active"));
+
+ document.getElementById(page).classList.add("active");
+
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+
+ window.scrollTo({top:0,behavior:"smooth"});
+
+}
+
+document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
+
+function askQuestion(q){
+
+ document.getElementById("questionInput").value=q;
+
+ go("ask");
+
+}
+
+function askFromSearch(){
+
+ const q=document.getElementById("mainSearch").value.trim();
+
+ if(!q)return;
+
+ askQuestion(q);
+
+}
+
+function research(){
+
+ const q=document.getElementById("questionInput").value.trim();
+
+ if(!q){alert("Ask Jason a question first.");return;}
+
+ document.getElementById("answerTitle").textContent=q;
+
+ document.getElementById("answerText").textContent=
+
+ "This is where Jason's investigation will appear. The live version will break your question into useful research steps, examine reliable sources, explain what the evidence says and suggest new questions to explore. The current preview does not access the internet or generate live research.";
+
+ document.getElementById("answer").style.display="block";
+
+}
+
+</script>
+
+</body>
+
+</html>
